@@ -3,16 +3,25 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Word List with Multiline Definitions</title>
+  <title>GregMat Vocabulary</title>
   <style>
     body {
       font-family: Arial, sans-serif;
       margin: 20px;
     }
-    .box-container {
+    .container {
       display: flex;
       flex-wrap: wrap;
-      gap: 10px;
+      gap: 20px;
+    }
+    .group {
+      flex: 1 1 calc(16.66% - 20px); /* 6 groups per row */
+      box-sizing: border-box;
+    }
+    .group-title {
+      font-weight: bold;
+      text-align: center;
+      margin-bottom: 10px;
     }
     .word-box {
       border: 1px solid #ccc;
@@ -20,7 +29,7 @@
       background-color: #f9f9f9;
       text-align: center;
       cursor: pointer;
-      width: 100px;
+      margin-bottom: 5px;
       border-radius: 5px;
     }
     .popup {
@@ -34,9 +43,7 @@
       padding: 20px;
       box-shadow: 0 0 10px rgba(0,0,0,0.1);
       z-index: 1000;
-    }
-    .popup img {
-      max-width: 100%;
+      width: 300px;
     }
     .overlay {
       display: none;
@@ -48,46 +55,106 @@
       background: rgba(0, 0, 0, 0.5);
       z-index: 999;
     }
+    .pronounce {
+      color: blue;
+      cursor: pointer;
+      font-size: 14px;
+      text-decoration: underline;
+      margin-left: 10px;
+    }
   </style>
 </head>
 <body>
-  <h1>Word List with Multiline Definitions</h1>
-  <div class="box-container">
-    <div class="word-box" 
-         onclick="showPopup(
-           'Disperse', 
-           '<strong>verb:</strong><br>scatter in different directions<br>The smoke began to disperse after the fire was extinguished.<br><br><strong>Synonyms:</strong><br>disseminate<br>diffuse<br>sprinkle'
-         )">
-      Disperse
-    </div>
-    <div class="word-box" 
-         onclick="showPopup(
-           'Analyze', 
-           '<strong>verb:</strong><br>examine methodically and in detail<br>The scientist analyzed the data to find patterns.<br><br><strong>Synonyms:</strong><br>examine<br>inspect<br>study'
-         )">
-      Analyze
-    </div>
+  <h1>GregMat Vocabulary: Groups 1-28</h1>
+  <div class="container">
+    <!-- Placeholder for 28 groups with 30 words each -->
+    <script>
+      const wordGroups = [
+        {
+          group: 1,
+          words: [
+            { 
+              word: "abound", 
+              definition: "<strong>Verb:</strong><br>reduce in intensity or amount<br>The storm began to abate after several hours.<br><br><strong>Synonyms:</strong><br>diminish, alleviate" 
+            },
+            { 
+              word: "amorphous", 
+              definition: "<strong>Adjective:</strong><br>Departing from an accepted standard.<br>His aberrant behavior surprised everyone.<br><br><strong>Synonyms:</strong><br>deviant, atypical" 
+            },
+            { 
+              word: "austere", 
+              definition: "<strong>Verb:</strong><br>To renounce a belief, cause, or claim.<br>She abjured her former beliefs.<br><br><strong>Synonyms:</strong><br>repudiate, disavow" 
+            },
+            { 
+              word: "belie", 
+              definition: "<strong>Verb:</strong><br>To leave secretly, typically to avoid detection.<br>The thief absconded with the jewels.<br><br><strong>Synonyms:</strong><br>flee, escape" 
+            },
+            { 
+              word: "capricious", 
+              definition: "<strong>Verb:</strong><br>To restrain oneself from doing or enjoying something.<br>He decided to abstain from alcohol for health reasons.<br><br><strong>Synonyms:</strong><br>refrain, desist" 
+            }
+            // Add remaining 25 words of Group 1 here...
+          ]
+        },
+        // Add Groups 2 through 28 in the same format...
+      ];
+
+      const container = document.querySelector(".container");
+
+      wordGroups.forEach(group => {
+        const groupDiv = document.createElement("div");
+        groupDiv.classList.add("group");
+
+        const groupTitle = document.createElement("div");
+        groupTitle.classList.add("group-title");
+        groupTitle.textContent = `Group ${group.group}`;
+        groupDiv.appendChild(groupTitle);
+
+        group.words.forEach(wordObj => {
+          const wordBox = document.createElement("div");
+          wordBox.classList.add("word-box");
+          wordBox.textContent = wordObj.word;
+          wordBox.onclick = () => {
+            showPopup(
+              wordObj.word,
+              `${wordObj.definition}`
+            );
+          };
+          groupDiv.appendChild(wordBox);
+        });
+
+        container.appendChild(groupDiv);
+      });
+
+      let currentWord = ''; // To store the word for pronunciation
+      function showPopup(title, content) {
+        currentWord = title; // Save the word for pronunciation
+        const popup = document.querySelector(".popup");
+        const overlay = document.querySelector(".overlay");
+        popup.innerHTML = `<h2>${title}</h2><span class="pronounce" id="pronounce-text" onclick='pronounceWord()'>Pronounce</span><p>${content}</p><button onclick='hidePopup()'>Close</button>`;
+        popup.style.display = "block";
+        overlay.style.display = "block";
+      }
+
+      function hidePopup() {
+        document.querySelector(".popup").style.display = "none";
+        document.querySelector(".overlay").style.display = "none";
+      }
+      
+      function pronounceWord() {
+      if ('speechSynthesis' in window) {
+        const utterance = new SpeechSynthesisUtterance(currentWord);
+        utterance.lang = 'en-US';
+        utterance.voice = speechSynthesis.getVoices().find(voice => voice.lang === 'en-US' && voice.name.includes('Female')) || null;
+        speechSynthesis.speak(utterance);
+      } else {
+        alert('Sorry, your browser does not support text-to-speech!');
+      }
+    }
+    </script>
   </div>
 
   <div class="overlay" onclick="hidePopup()"></div>
-  <div class="popup">
-    <h2 id="popup-title"></h2>
-    <p id="popup-content"></p>
-    <button onclick="hidePopup()">Close</button>
-  </div>
-
-  <script>
-    function showPopup(title, content) {
-      document.getElementById('popup-title').innerText = title;
-      document.getElementById('popup-content').innerHTML = content;
-      document.querySelector('.popup').style.display = 'block';
-      document.querySelector('.overlay').style.display = 'block';
-    }
-
-    function hidePopup() {
-      document.querySelector('.popup').style.display = 'none';
-      document.querySelector('.overlay').style.display = 'none';
-    }
-  </script>
+  <div class="popup"></div>
 </body>
 </html>
