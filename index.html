@@ -1,1 +1,93 @@
-Hello World
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Word List with Multiline Definitions</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+    }
+    .box-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .word-box {
+      border: 1px solid #ccc;
+      padding: 10px;
+      background-color: #f9f9f9;
+      text-align: center;
+      cursor: pointer;
+      width: 100px;
+      border-radius: 5px;
+    }
+    .popup {
+      display: none;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: white;
+      border: 1px solid #ccc;
+      padding: 20px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      z-index: 1000;
+    }
+    .popup img {
+      max-width: 100%;
+    }
+    .overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: 999;
+    }
+  </style>
+</head>
+<body>
+  <h1>Word List with Multiline Definitions</h1>
+  <div class="box-container">
+    <div class="word-box" 
+         onclick="showPopup(
+           'Disperse', 
+           '<strong>verb:</strong><br>scatter in different directions<br>The smoke began to disperse after the fire was extinguished.<br><br><strong>Synonyms:</strong><br>disseminate<br>diffuse<br>sprinkle'
+         )">
+      Disperse
+    </div>
+    <div class="word-box" 
+         onclick="showPopup(
+           'Analyze', 
+           '<strong>verb:</strong><br>examine methodically and in detail<br>The scientist analyzed the data to find patterns.<br><br><strong>Synonyms:</strong><br>examine<br>inspect<br>study'
+         )">
+      Analyze
+    </div>
+  </div>
+
+  <div class="overlay" onclick="hidePopup()"></div>
+  <div class="popup">
+    <h2 id="popup-title"></h2>
+    <p id="popup-content"></p>
+    <button onclick="hidePopup()">Close</button>
+  </div>
+
+  <script>
+    function showPopup(title, content) {
+      document.getElementById('popup-title').innerText = title;
+      document.getElementById('popup-content').innerHTML = content;
+      document.querySelector('.popup').style.display = 'block';
+      document.querySelector('.overlay').style.display = 'block';
+    }
+
+    function hidePopup() {
+      document.querySelector('.popup').style.display = 'none';
+      document.querySelector('.overlay').style.display = 'none';
+    }
+  </script>
+</body>
+</html>
