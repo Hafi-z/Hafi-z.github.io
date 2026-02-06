@@ -1,265 +1,160 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hafizur Rahman - Portfolio</title>
-    <meta name="description" content="Portfolio of Hafizur Rahman - Software Engineer">
-
-    <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
-
-    <!-- Styles -->
-    <link rel="stylesheet" href="style.css">
-
-    <!-- Icons (using Ionicons for modern feel) -->
-    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
-    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GregMat Vocabulary</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+    }
+    .container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+    .group {
+      flex: 1 1 calc(16.66% - 20px); /* 6 groups per row */
+      box-sizing: border-box;
+    }
+    .group-title {
+      font-weight: bold;
+      text-align: center;
+      margin-bottom: 10px;
+    }
+    .word-box {
+      border: 1px solid #ccc;
+      padding: 10px;
+      background-color: #f9f9f9;
+      text-align: center;
+      cursor: pointer;
+      margin-bottom: 5px;
+      border-radius: 5px;
+    }
+    .popup {
+      display: none;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: white;
+      border: 1px solid #ccc;
+      padding: 20px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      z-index: 1000;
+      width: 300px;
+    }
+    .overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: 999;
+    }
+    .pronounce {
+      color: blue;
+      cursor: pointer;
+      font-size: 14px;
+      text-decoration: underline;
+      margin-left: 10px;
+    }
+  </style>
 </head>
-
 <body>
+  <h1>GregMat Vocabulary: Groups 1-28</h1>
+  <div class="container">
+    <!-- Placeholder for 28 groups with 30 words each -->
+    <script>
+      const wordGroups = [
+        {
+          group: 1,
+          words: [
+            { 
+              word: "abound", 
+              definition: "<strong>Verb:</strong><br>reduce in intensity or amount<br>The storm began to abate after several hours.<br><br><strong>Synonyms:</strong><br>diminish, alleviate" 
+            },
+            { 
+              word: "amorphous", 
+              definition: "<strong>Adjective:</strong><br>Departing from an accepted standard.<br>His aberrant behavior surprised everyone.<br><br><strong>Synonyms:</strong><br>deviant, atypical" 
+            },
+            { 
+              word: "austere", 
+              definition: "<strong>Verb:</strong><br>To renounce a belief, cause, or claim.<br>She abjured her former beliefs.<br><br><strong>Synonyms:</strong><br>repudiate, disavow" 
+            },
+            { 
+              word: "belie", 
+              definition: "<strong>Verb:</strong><br>To leave secretly, typically to avoid detection.<br>The thief absconded with the jewels.<br><br><strong>Synonyms:</strong><br>flee, escape" 
+            },
+            { 
+              word: "capricious", 
+              definition: "<strong>Verb:</strong><br>To restrain oneself from doing or enjoying something.<br>He decided to abstain from alcohol for health reasons.<br><br><strong>Synonyms:</strong><br>refrain, desist" 
+            }
+            // Add remaining 25 words of Group 1 here...
+          ]
+        },
+        // Add Groups 2 through 28 in the same format...
+      ];
 
-    <div class="container">
+      const container = document.querySelector(".container");
 
-        <!-- Mobile Header / Theme Toggle -->
-        <header class="mobile-header">
-            <div class="theme-toggle-wrapper">
-                <button id="theme-toggle" class="btn-icon" aria-label="Toggle Dark Mode">
-                    <ion-icon name="moon-outline"></ion-icon>
-                </button>
-            </div>
-        </header>
+      wordGroups.forEach(group => {
+        const groupDiv = document.createElement("div");
+        groupDiv.classList.add("group");
 
-        <div class="content-wrapper">
+        const groupTitle = document.createElement("div");
+        groupTitle.classList.add("group-title");
+        groupTitle.textContent = `Group ${group.group}`;
+        groupDiv.appendChild(groupTitle);
 
-            <!-- Left Sidebar: Profile -->
-            <aside class="sidebar">
-                <div class="profile-card">
-                    <div class="profile-img-container">
-                        <!-- Placeholder for Profile Image - generating one later -->
-                        <!-- <div class="profile-img-placeholder"></div> -->
-                        <img src="Hafizur Rahman.jpg" alt="Hafiz" style="width: 100%; height: 100%; object-fit: cover;">
-                    </div>
-                    <h1>Hafizur Rahman</h1>
-                    <p class="subtitle">Software Engineer at Kite Games Studio</p>
+        group.words.forEach(wordObj => {
+          const wordBox = document.createElement("div");
+          wordBox.classList.add("word-box");
+          wordBox.textContent = wordObj.word;
+          wordBox.onclick = () => {
+            showPopup(
+              wordObj.word,
+              `${wordObj.definition}`
+            );
+          };
+          groupDiv.appendChild(wordBox);
+        });
 
-                    <div class="social-links">
-                        <a href="mailto:email@example.com" title="Email"><ion-icon name="mail-outline"></ion-icon>
-                            Email</a>
-                        <a href="#" title="GitHub"><ion-icon name="logo-github"></ion-icon> GitHub</a>
-                        <a href="#" title="LinkedIn"><ion-icon name="logo-linkedin"></ion-icon> LinkedIn</a>
-                        <a href="#" title="Google Scholar"><ion-icon name="school-outline"></ion-icon> Scholar</a>
-                    </div>
-                </div>
-            </aside>
+        container.appendChild(groupDiv);
+      });
 
-            <!-- Main Content Area -->
-            <main class="main-content">
+      let currentWord = ''; // To store the word for pronunciation
+      function showPopup(title, content) {
+        currentWord = title; // Save the word for pronunciation
+        const popup = document.querySelector(".popup");
+        const overlay = document.querySelector(".overlay");
+        popup.innerHTML = `<h2>${title}</h2><span class="pronounce" id="pronounce-text" onclick='pronounceWord()'>Pronounce</span><p>${content}</p><button onclick='hidePopup()'>Close</button>`;
+        popup.style.display = "block";
+        overlay.style.display = "block";
+      }
 
-                <!-- Navbar (Desktop) -->
-                <nav class="main-nav">
-                    <ul>
-                        <li><a href="#about" class="active">About</a></li>
-                        <li><a href="#publications">Publications</a></li>
-                        <li><a href="#projects">Projects</a></li>
-                        <li><a href="#experience">Experience</a></li>
-                        <li><a href="#skills">Skills</a></li>
-                        <li><a href="#cv">CV</a></li>
-                    </ul>
-                </nav>
+      function hidePopup() {
+        document.querySelector(".popup").style.display = "none";
+        document.querySelector(".overlay").style.display = "none";
+      }
+      
+      function pronounceWord() {
+      if ('speechSynthesis' in window) {
+        const utterance = new SpeechSynthesisUtterance(currentWord);
+        utterance.lang = 'en-US';
+        utterance.voice = speechSynthesis.getVoices().find(voice => voice.lang === 'en-US' && voice.name.includes('Female')) || null;
+        speechSynthesis.speak(utterance);
+      } else {
+        alert('Sorry, your browser does not support text-to-speech!');
+      }
+    }
+    </script>
+  </div>
 
-                <!-- Section: About -->
-                <section id="about" class="section">
-                    <h2>About Me</h2>
-                    <p>
-                        I am a Software Engineer (Android) at Kite Games Studio. I used to work with Kotlin, Java and Jetpack Compose.
-                    </p>
-                    <p>
-                        I am passionate about solving real-world problems through data-driven approaches and learning
-                        android development.
-                    </p>
-                </section>
-
-                <hr>
-
-                <!-- Section: News/Updates -->
-                <section id="news" class="section">
-                    <h2>Recent News</h2>
-                    <ul class="news-list">
-                        <li>
-                            <span class="date">Feb 2026</span>
-                            <span class="news-content">Building a new responsive portfolio site.</span>
-                        </li>
-                        <li>
-                            <span class="date">Jan 2026</span>
-                            <span class="news-content">Published a new paper on Deep Learning optimization.</span>
-                        </li>
-                    </ul>
-                </section>
-
-                <!-- Section: Publications -->
-                <section id="publications" class="section">
-                    <h2>Selected Publications</h2>
-                    <div class="publication-item">
-                        <h3><a href="#">Deep Learning for Medical Image Analysis: A Comprehensive Review</a></h3>
-                        <p class="meta">Published in <strong>IEEE Access</strong>, 2025.</p>
-                        <p>Authors: <em>Hafizur Rahman</em>, Co-author Name.</p>
-                        <div class="pub-links">
-                            <a href="#" class="btn-sm"><ion-icon name="document-text-outline"></ion-icon> PDF</a>
-                            <a href="#" class="btn-sm"><ion-icon name="logo-github"></ion-icon> Code</a>
-                        </div>
-                    </div>
-
-                    <div class="publication-item">
-                        <h3><a href="#">Optimizing Neural Networks for Edge Devices</a></h3>
-                        <p class="meta">Conference on Computer Vision and Pattern Recognition (CVPR), 2024.</p>
-                        <p>Authors: <em>Hafizur Rahman</em>, Lead Researcher.</p>
-                        <div class="pub-links">
-                            <a href="#" class="btn-sm"><ion-icon name="document-text-outline"></ion-icon> PDF</a>
-                        </div>
-                    </div>
-                </section>
-
-                <!-- Section: Experience -->
-                <section id="experience" class="section">
-                    <h2>Experience</h2>
-                    <div class="timeline">
-                        <div class="timeline-item">
-                            <div class="role">Lecturer</div>
-                            <div class="company">Daffodil International University (DIU)</div>
-                            <div class="duration">2024 - Present</div>
-                            <p>Teaching undergraduate courses in Computer Science, supervising final year projects, and
-                                conducting research in AI/ML.</p>
-                        </div>
-                        <div class="timeline-item">
-                            <div class="role">Research Assistant</div>
-                            <div class="company">AI Lab, University Name</div>
-                            <div class="duration">2022 - 2024</div>
-                            <p>Worked on developing novel algorithms for image segmentation and classification.</p>
-                        </div>
-                    </div>
-                </section>
-
-                <!-- Section: Skills -->
-                <section id="skills" class="section">
-                    <h2>Skills</h2>
-                    <div class="skills-grid">
-                        <div class="skill-category">
-                            <h3>Languages</h3>
-                            <div class="tags">
-                                <span>Python</span>
-                                <span>C++</span>
-                                <span>JavaScript</span>
-                                <span>MATLAB</span>
-                            </div>
-                        </div>
-                        <div class="skill-category">
-                            <h3>Machine Learning</h3>
-                            <div class="tags">
-                                <span>TensorFlow</span>
-                                <span>PyTorch</span>
-                                <span>Scikit-learn</span>
-                                <span>OpenCV</span>
-                                <span>Pandas</span>
-                            </div>
-                        </div>
-                        <div class="skill-category">
-                            <h3>Web & Tools</h3>
-                            <div class="tags">
-                                <span>HTML5/CSS3</span>
-                                <span>Git</span>
-                                <span>LaTeX</span>
-                                <span>Docker</span>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-
-                <!-- Section: Projects -->
-                <section id="projects" class="section">
-                    <h2>Recent Projects</h2>
-                    <div class="projects-grid">
-                        <div class="project-card">
-                            <div class="project-content">
-                                <h3>AI-Based Traffic System</h3>
-                                <p>An intelligent traffic management system using computer vision to optimize signal
-                                    timing and reduce congestion.</p>
-                                <div class="project-tags">
-                                    <span>Python</span>
-                                    <span>YOLOv8</span>
-                                    <span>OpenCV</span>
-                                </div>
-                                <div class="project-links">
-                                    <a href="#" class="btn-text">View Project <ion-icon
-                                            name="arrow-forward-outline"></ion-icon></a>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="project-card">
-                            <div class="project-content">
-                                <h3>NLP Sentiment Analysis</h3>
-                                <p>A transformer-based model to analyze public sentiment on social media regarding
-                                    climate change policies.</p>
-                                <div class="project-tags">
-                                    <span>BERT</span>
-                                    <span>PyTorch</span>
-                                    <span>HuggingFace</span>
-                                </div>
-                                <div class="project-links">
-                                    <a href="#" class="btn-text">View Project <ion-icon
-                                            name="arrow-forward-outline"></ion-icon></a>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="project-card">
-                            <div class="project-content">
-                                <h3>Smart Healthcare Assistant</h3>
-                                <p>A chatbot application designed to provide preliminary medical advice and appointment
-                                    scheduling for rural areas.</p>
-                                <div class="project-tags">
-                                    <span>RASA</span>
-                                    <span>React Native</span>
-                                    <span>Cloud Functions</span>
-                                </div>
-                                <div class="project-links">
-                                    <a href="#" class="btn-text">View Project <ion-icon
-                                            name="arrow-forward-outline"></ion-icon></a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-
-                <!-- Section: Contact -->
-                <section id="contact" class="section">
-                    <h2>Get in Touch</h2>
-                    <p>
-                        I am always open to discussing new research collaborations, thesis supervision, or guest lecture
-                        opportunities.
-                    </p>
-                    <div class="contact-actions">
-                        <a href="mailto:email@example.com" class="btn"><ion-icon name="mail-outline"></ion-icon> Send
-                            Email</a>
-                        <a href="#" class="btn btn-outline"><ion-icon name="document-text-outline"></ion-icon> Download
-                            CV</a>
-                    </div>
-                </section>
-
-            </main>
-        </div>
-
-        <footer class="site-footer">
-            <p>&copy; 2026 Hafizur Rahman. Powered by Modern Web Standards.</p>
-        </footer>
-
-    </div>
-
-    <script src="script.js"></script>
+  <div class="overlay" onclick="hidePopup()"></div>
+  <div class="popup"></div>
 </body>
-
 </html>
